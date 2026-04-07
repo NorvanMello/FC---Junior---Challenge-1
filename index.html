@@ -26,20 +26,39 @@
       <h1>Analyze your text in real-time.</h1>
 
       <section class="text-area">
-        <textarea name="" id=""></textarea>
+        <textarea name="" id="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ex quod accusantium! Voluptatum soluta dolores minus nobis id voluptatem quam, laborum voluptates amet alias necessitatibus odit iure, maiores assumenda, libero optio impedit veniam doloribus maxime ut perferendis. Quam dolores quo voluptatem a, neque consequatur at doloremque repellat, vel blanditiis incidunt?</textarea>
+
+        <section class="option-sec">
+          <p><input type="checkbox"> Exclude Spaces</p>
+
+          <p><input type="checkbox"> Set Character Limit</p>
+
+          <p class="reading-time-text">Approx. reading time: 1 minute</p>
+        </section>
       </section>
 
+      
+
       <section class="show-results">
-        <div class="total-chars">
+        <div class="total-chars show-result-divs">
+          <img src="./assets/images/pattern-character-count.svg" alt="" class="bg-img-show-results-divs">
 
+          <span class="number-show-results">278</span>
+          <span class="text-show-results">Total Characters</span>
         </div>
 
-        <div class="word-count">
+        <div class="word-count show-result-divs">
+          <img src="./assets/images/pattern-word-count.svg" alt="" class="bg-img-show-results-divs">
 
+          <span class="number-show-results">39</span>
+          <span class="text-show-results">Word Count</span>
         </div>
 
-        <div class="senten-count">
+        <div class="sentence-count show-result-divs">
+          <img src="./assets/images/pattern-sentence-count.svg" alt="" class="bg-img-show-results-divs">
 
+          <span class="number-show-results">04</span>
+          <span class="text-show-results">Sentence Count</span>
         </div>
 
         <div class="letter-density">
@@ -52,9 +71,6 @@
   <!-- 
 
   Start typing here… (or paste your text)
-
-  Exclude Spaces
-  Set Character Limit
 
   Approx. reading time: Insert number minutes
 
