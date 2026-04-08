@@ -23,12 +23,19 @@
 
     /* Colors Category*/
 
+    /* Dark Theme*/
     --bg-primary-color-dark: var(--neutral-900);
     --bg-secondary-color-dark:var(--neutral-700);
 
     --title-primary-color-dark: var(--neutral-100);
     
     --text-primary-color-dark: var(--neutral-200);
+
+    /* Light Theme */
+    --bg-primary-color-light: var(--neutral-0);
+    
+
+    --text-primary-color-light: var(--neutral-700);
 
     /* Typography */
     --text-preset-1: 700 64px "DM Sans", sans-serif;
@@ -141,7 +148,7 @@ h1 {
 
 }
 
-.text-area textarea {
+#text-area-style {
     width: 100%;
     height: 200px;
 
@@ -309,7 +316,15 @@ h1 {
     width: 100%;
 }
 
+/* Theme Switch */
+.bg-light {
+    background: var(--bg-primary-color-light);
+}
 
+.text-color {
+    color: var(--text-primary-color-light) !important; /* I needed to add !important here because #text-area-style wasn't changing the color */
+}
 
-
-
+.checkBox-light {
+    border: 1px solid var(--neutral-900) !important;
+}
