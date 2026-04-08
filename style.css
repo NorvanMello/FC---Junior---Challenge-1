@@ -33,7 +33,7 @@
 
     /* Light Theme */
     --bg-primary-color-light: var(--neutral-0);
-    
+    --bg-secondary-color-light: var(--neutral-200);
 
     --text-primary-color-light: var(--neutral-700);
 
@@ -319,6 +319,14 @@ h1 {
 /* Theme Switch */
 .bg-light {
     background: var(--bg-primary-color-light);
+}
+
+.header-btn-light {
+    background: var(--neutral-100);
+}
+
+.bg-text-area-color {
+    background: var(--bg-secondary-color-light) !important;
 }
 
 .text-color {
