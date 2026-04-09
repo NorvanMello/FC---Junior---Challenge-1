@@ -12,6 +12,8 @@ const extraContent = document.querySelector(".extra-content");
 
 const toggleBtn = document.querySelector(".toggle-btn")
 
+
+/* Button - Dark/Light Mode */
 headerBtn.addEventListener("click", () => {
     /* Selecting inside the event because before clicking, there is no element created - letter-label for instance */
     const primaryTextColor = document.querySelectorAll("#text-area-style, .option-sec, .letter-title, .letter-label, .percentage, .toggle-btn, h1");
@@ -40,21 +42,27 @@ headerBtn.addEventListener("click", () => {
     })
 })
 
+/* Functions to work with user's input */
+const totalChars = document.querySelector(".characters");
+
+function charecterCount(text) {
+    totalChars.innerText = `${String(text.length).padStart(2, '0')}`
+}
+
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
 const isExpended = true;
 const totalElementsVisible = 5;
 
-let word = [];
+let words = [];
 
 textArea.addEventListener("input", (e) => {
 
-    word = e.target.value;
+    words = e.target.value;
     
-    console.log(word)
+    charecterCount(words)
 })
 
-console.log(word)
-
+/* Output letters and bars */
 function renderLetterDensity() {
     for(let i = 0; i < letters.length; i++) {
         if(i < 5) {
@@ -89,7 +97,6 @@ function renderLetterDensity() {
                 </li>
                 </ul>
             `
-
             toggleBtn.innerHTML = `
             See more
             <span class="arrow"></span>`
@@ -97,6 +104,8 @@ function renderLetterDensity() {
         
     }
 }
+
+/* Button - Modify Text and Arrow */
 
 toggleBtn.addEventListener('click', (e) => {
     extraContent.classList.toggle("block")
