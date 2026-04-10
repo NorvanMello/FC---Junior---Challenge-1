@@ -3,15 +3,12 @@ const headerBtn = document.querySelector(".header-btn");
 const headerBtnImg = document.querySelector(".btn-img")
 const logo = document.querySelector(".logo-img");
 
-const textArea = document.querySelector("#text-area-element")
-
 const checkBox = document.querySelectorAll('.option-sec p input[type="checkbox"]');
 
 const letterDensity = document.querySelector(".letter-density");
 const extraContent = document.querySelector(".extra-content");
 
 const toggleBtn = document.querySelector(".toggle-btn")
-
 
 /* Button - Dark/Light Mode */
 headerBtn.addEventListener("click", () => {
@@ -44,25 +41,33 @@ headerBtn.addEventListener("click", () => {
 
 /* Functions to work with user's input */
 const totalChars = document.querySelector(".characters");
-
-function charecterCount(text) {
-    totalChars.innerText = `${String(text.length).padStart(2, '0')}`
-}
-
-const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-const isExpended = true;
-const totalElementsVisible = 5;
+const excludeSpaces = document.getElementById("exclude-spaces");
+const textArea = document.querySelector("#text-area-element")
 
 let words = [];
 
-textArea.addEventListener("input", (e) => {
+function updateUI() {
+    const text = textArea.value;
+    const exclude = excludeSpaces.checked;
 
-    words = e.target.value;
-    
-    charecterCount(words)
-})
+    console
+
+    if(!exclude) {
+        totalChars.innerText = `${String(text.length).padStart(2, '0')}`
+    } else {
+        let noBlankSpace = text.replace(/\s+/g, "");
+        totalChars.innerText = `${String(noBlankSpace.length).padStart(2, '0')}`
+    }
+
+}
+
+textArea.addEventListener("input", updateUI);
+excludeSpaces.addEventListener("change", updateUI);
 
 /* Output letters and bars */
+const letters = ['a', 'b', 'c'];
+const totalElementsVisible = 5;
+
 function renderLetterDensity() {
     for(let i = 0; i < letters.length; i++) {
         if(i < 5) {
