@@ -10,6 +10,7 @@ const extraContent = document.querySelector(".extra-content");
 
 const toggleBtn = document.querySelector(".toggle-btn")
 
+
 /* Button - Dark/Light Mode */
 headerBtn.addEventListener("click", () => {
     /* Selecting inside the event because before clicking, there is no element created - letter-label for instance */
@@ -42,27 +43,41 @@ headerBtn.addEventListener("click", () => {
 /* Functions to work with user's input */
 const totalChars = document.querySelector(".characters");
 const excludeSpaces = document.getElementById("exclude-spaces");
-const textArea = document.querySelector("#text-area-element")
+const textArea = document.querySelector("#text-area-element");
+const characterLimit = document.getElementById("character-limit");
+const characterLimitText = document.querySelector(".character-limit-text")
 
-let words = [];
+let maxLengh = 300;
 
 function updateUI() {
     const text = textArea.value;
     const exclude = excludeSpaces.checked;
-
-    console
+    const limit = characterLimit.checked;
+    let noBlankSpace = text.replace(/\s+/g, "");
 
     if(!exclude) {
         totalChars.innerText = `${String(text.length).padStart(2, '0')}`
     } else {
-        let noBlankSpace = text.replace(/\s+/g, "");
+        
         totalChars.innerText = `${String(noBlankSpace.length).padStart(2, '0')}`
     }
 
+    if(limit) {
+        characterLimitText.classList.add("block")
+
+        if(!exclude) {
+            characterLimitText.innerText = `${maxLengh - text.length}`
+        } else {
+            characterLimitText.innerText = `${maxLengh - noBlankSpace.length}`
+        }  
+    } else {
+        characterLimitText.classList.remove("block")
+    }
 }
 
 textArea.addEventListener("input", updateUI);
 excludeSpaces.addEventListener("change", updateUI);
+characterLimit.addEventListener("change", updateUI);
 
 /* Output letters and bars */
 const letters = ['a', 'b', 'c'];
