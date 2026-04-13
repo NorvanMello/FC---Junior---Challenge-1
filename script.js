@@ -45,7 +45,8 @@ const totalChars = document.querySelector(".characters");
 const excludeSpaces = document.getElementById("exclude-spaces");
 const textArea = document.querySelector("#text-area-element");
 const characterLimit = document.getElementById("character-limit");
-const characterLimitText = document.querySelector(".character-limit-text")
+const characterLimitText = document.querySelector(".character-limit-text");
+const errorText = document.querySelector(".error-text");
 
 let maxLengh = 300;
 
@@ -55,23 +56,41 @@ function updateUI() {
     const limit = characterLimit.checked;
     let noBlankSpace = text.replace(/\s+/g, "");
 
+    /* Check if exclude spaces is selected - Output total Characters*/
     if(!exclude) {
-        totalChars.innerText = `${String(text.length).padStart(2, '0')}`
-    } else {
-        
-        totalChars.innerText = `${String(noBlankSpace.length).padStart(2, '0')}`
+        totalChars.innerText = `${String(text.length).padStart(2, '0')}`; // Output the count with blank spaces
+    } else { 
+        totalChars.innerText = `${String(noBlankSpace.length).padStart(2, '0')}`; //Output the count with no blank spaces
     }
 
-    if(limit) {
-        characterLimitText.classList.add("block")
 
+    /* Check if limit checkbox is selected */
+    console.log(limit)
+    if(limit) {
+        /* When selected, make the span with class character-limit-text visible and set a character limit */
+        characterLimitText.classList.add("block");
+        textArea.setAttribute("maxlength", 300)
+
+        /* Check if exclude spaces is selected */
         if(!exclude) {
-            characterLimitText.innerText = `${maxLengh - text.length}`
+            characterLimitText.innerText = `${Math.max(0, maxLengh - text.length)}`; // Output the count with blank spaces
         } else {
-            characterLimitText.innerText = `${maxLengh - noBlankSpace.length}`
-        }  
+            characterLimitText.innerText = `${Math.max(0, maxLengh - noBlankSpace.length)}`; //Output the count with no blank spaces
+        }
+        
+        if(text.length >= textArea.maxLength) { //Check if text inside text area is equal or bigger than maxlength
+            textArea.classList.add("error"); //Add error class (orange border)
+            if(text.length > textArea.maxLength) { // Check if text insde text are is bigger than maxlength
+                errorText.classList.add("block") // Make error text visible
+            } else {
+                errorText.classList.remove("block") //Make error text invisible
+            }
+        } else {
+            textArea.classList.remove("error"); // Remove the orange border
+        }
     } else {
-        characterLimitText.classList.remove("block")
+        characterLimitText.classList.remove("block"); // Remove counter character limit
+        textArea.removeAttribute("maxlength") // Remove maxlength attribute (users can type as long as they deserve)
     }
 }
 
