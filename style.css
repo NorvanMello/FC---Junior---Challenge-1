@@ -144,8 +144,7 @@ h1 {
 
 .text-area {
     padding: 0 var(--spacing-200);
-     margin-bottom: var(--spacing-500);
-
+    margin-bottom: var(--spacing-500);
 }
 
 #text-area-element {
@@ -160,6 +159,8 @@ h1 {
 
     margin-bottom: var(--spacing-200);
 }
+
+
 
 .option-sec {
     max-width: 343px;
@@ -178,6 +179,7 @@ h1 {
 
 .option-sec p:nth-child(2) {
     margin: 12px 0;
+    height: 30px; /*Adjust the height size to limit text*/
 }
 
 .option-sec p input[type="checkbox"] {
@@ -204,6 +206,16 @@ h1 {
     background-image: url("./assets/images/icon-check.svg");
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.character-limit-text {
+    margin-left: 20px;
+    padding: 4px 12px;
+
+    border: 1px solid var(--neutral-600);
+    border-radius: var(--radius-6);
+
+    display: none;
 }
 
 .show-results {
@@ -372,6 +384,22 @@ h1 {
     border: 1px solid var(--neutral-900) !important;
 }
 
+/* Error Statement */
+
+.error {
+    border: 2px solid var(--orange-500);
+    box-shadow: 0 0 8px var(--orange-500);
+    outline: none;
+}
+
+.error-text {
+    font: var(--text-preset-4);
+    letter-spacing: var(--text-preset-4-letter-spacing);
+    color: var(--orange-500);
+
+    display: none; /* To push the element to bottom (margin-bottom)*/
+    margin-bottom: var(--spacing-200);
+}
 
 /* Hidden & Block Classes */
 .hidden {
