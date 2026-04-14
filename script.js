@@ -48,10 +48,23 @@ const characterLimit = document.getElementById("character-limit");
 const characterLimitText = document.querySelector(".character-limit-text");
 const errorText = document.querySelector(".error-text");
 
+const words = document.querySelector(".words");
+
+const sentences = document.querySelector(".sentences");
+
 let maxLengh = 300;
 
 function updateUI() {
     const text = textArea.value;
+    
+    characterCount(text);
+
+    wordCount(text);
+
+    sentenceCount(text);
+}
+
+function characterCount(text) {
     const exclude = excludeSpaces.checked;
     const limit = characterLimit.checked;
     let noBlankSpace = text.replace(/\s+/g, "");
@@ -65,7 +78,6 @@ function updateUI() {
 
 
     /* Check if limit checkbox is selected */
-    console.log(limit)
     if(limit) {
         /* When selected, make the span with class character-limit-text visible and set a character limit */
         characterLimitText.classList.add("block");
@@ -92,6 +104,18 @@ function updateUI() {
         characterLimitText.classList.remove("block"); // Remove counter character limit
         textArea.removeAttribute("maxlength") // Remove maxlength attribute (users can type as long as they deserve)
     }
+}
+
+function wordCount(text) {
+    const wordsToCount = text.trim().split(" ").filter(w => w !== "")
+    const total = String(wordsToCount.length).padStart(2, '0')
+    words.innerText = total
+}
+
+function sentenceCount(text) {
+    const segmenter = new Intl.Segmenter('en-US', { granularity: 'sentence' });
+    const segmentos = segmenter.segment(text);
+    sentences.innerText = Array.from(segmentos).length;
 }
 
 textArea.addEventListener("input", updateUI);
