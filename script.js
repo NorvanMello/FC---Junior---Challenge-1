@@ -5,7 +5,7 @@ const logo = document.querySelector(".logo-img");
 
 const checkBox = document.querySelectorAll('.option-sec p input[type="checkbox"]');
 
-const letterDensity = document.querySelector(".letter-density");
+const letterDensity = document.querySelector(".letter-list");
 const extraContent = document.querySelector(".extra-content");
 
 const toggleBtn = document.querySelector(".toggle-btn")
@@ -56,18 +56,20 @@ let maxLengh = 300;
 
 function updateUI() {
     const text = textArea.value;
+    let noBlankSpace = text.replace(/\s+/g, "");
     
-    characterCount(text);
+    characterCount(text, noBlankSpace);
 
     wordCount(text);
 
     sentenceCount(text);
+
+    extractLetters(text, noBlankSpace);
 }
 
-function characterCount(text) {
+function characterCount(text, noBlankSpace) {
     const exclude = excludeSpaces.checked;
     const limit = characterLimit.checked;
-    let noBlankSpace = text.replace(/\s+/g, "");
 
     /* Check if exclude spaces is selected - Output total Characters*/
     if(!exclude) {
@@ -106,41 +108,58 @@ function characterCount(text) {
     }
 }
 
+/* Counting Words */
 function wordCount(text) {
-    const wordsToCount = text.trim().split(" ").filter(w => w !== "")
-    const total = String(wordsToCount.length).padStart(2, '0')
-    words.innerText = total
+    const wordsToCount = text.trim().split(" ").filter(w => w !== ""); // Removing spacing at start and end. Split the string into elements in an array, using space as separator. Filtering to keep non empty words.
+    const total = String(wordsToCount.length).padStart(2, '0');
+    words.innerText = total;
 }
 
+/* Counting Sentences */
 function sentenceCount(text) {
     const segmenter = new Intl.Segmenter('en-US', { granularity: 'sentence' });
     const segmentos = segmenter.segment(text);
-    sentences.innerText = Array.from(segmentos).length;
+    sentences.innerText = String(Array.from(segmentos).length).padStart(2, '0');
 }
 
+/* Event Listener */
 textArea.addEventListener("input", updateUI);
 excludeSpaces.addEventListener("change", updateUI);
 characterLimit.addEventListener("change", updateUI);
 
+
 /* Output letters and bars */
-const letters = ['a', 'b', 'c'];
 const totalElementsVisible = 5;
 
-function renderLetterDensity() {
+function renderLetterDensity(letterObj, noBlankSpace) {
+    let letters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
+
+    /* Checking if the letters array is smaller than the totalElementsVisibel. If it is:
+        Add the letter in the div visible (letterDensity)
+
+        If not
+
+        It will be added in the not visible (unless user press the buttom See more) extraContent 
+    */
+    letterDensity.innerHTML = '';
+    extraContent.innerHTML = '';
+    
     for(let i = 0; i < letters.length; i++) {
-        if(i < 5) {
+        let perLetters = ((letters[i][1] / noBlankSpace.length) * 100).toFixed(2);
+
+        if(i < totalElementsVisible) {
             letterDensity.innerHTML += `
             <ul class="list-container">
             <li class="list-item">
-                <span class="letter-label">${letters[i].toUpperCase()}</span>
+                <span class="letter-label">${letters[i][0].toUpperCase()}</span>
 
                 <div class="progress-bar">
                   <div class="track-bar">
-                    <div class="fill-bar"></div>
+                    <div class="fill-bar" style="width: ${perLetters}%" ></div>
                   </div>
                 </div>
 
-                <span class="percentage"></span>
+                <span class="percentage">${((letters[i][1] / noBlankSpace.length) * 100).toFixed(2)}</span>
             </li>
           </ul>
         `
@@ -148,23 +167,22 @@ function renderLetterDensity() {
             extraContent.innerHTML += `
                 <ul class="list-container">
                 <li class="list-item">
-                    <span class="letter-label">${letters[i].toUpperCase()}</span>
+                    <span class="letter-label">${letters[i][0].toUpperCase()}</span>
 
                     <div class="progress-bar">
                     <div class="track-bar">
-                        <div class="fill-bar"></div>
+                        <div class="fill-bar" style="width: ${perLetters}%"></div>
                     </div>
                     </div>
 
-                    <span class="percentage"></span>
+                    <span class="percentage">${((letters[i][1] / noBlankSpace.length) * 100).toFixed(2)}</span>
                 </li>
                 </ul>
             `
             toggleBtn.innerHTML = `
             See more
             <span class="arrow"></span>`
-        }
-        
+        }    
     }
 }
 
@@ -185,5 +203,21 @@ toggleBtn.addEventListener('click', (e) => {
 
     
 })
+
+function extractLetters (text, noBlankSpace) {
+    let lettersObj = {};
+
+    let cleanText = text.toUpperCase().replace(/[^a-zA-Z]/g, "")
+
+    for(let letter of cleanText) {
+        if(lettersObj[letter]) {
+            lettersObj[letter] += 1
+        } else {
+            lettersObj[letter] = 1;
+        }
+    }
+
+    renderLetterDensity(lettersObj, noBlankSpace)
+}
 
 renderLetterDensity();
