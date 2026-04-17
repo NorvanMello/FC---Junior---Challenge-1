@@ -52,13 +52,13 @@ const words = document.querySelector(".words");
 
 const sentences = document.querySelector(".sentences");
 
-let maxLengh = 300;
+const MAX_LENGTH = 10;
 
 function updateUI() {
     const text = textArea.value;
     let noBlankSpace = text.replace(/\s+/g, "");
     
-    characterCount(text, noBlankSpace);
+    updateCharacterCount(text, noBlankSpace);
 
     wordCount(text);
 
@@ -67,44 +67,60 @@ function updateUI() {
     extractLetters(text, noBlankSpace);
 }
 
-function characterCount(text, noBlankSpace) {
+function getCurrentCharacterCount(text, noBlankSpace, exclude) {
+    return exclude ? noBlankSpace.length : text.length;
+}
+
+function renderCharacterCount(count) {
+    totalChars.innerText = String(count).padStart(2, '0')
+}
+
+function clearErrorMessage() {
+    errorText.classList.remove("flex");
+    errorText.innerHTML = "";
+}
+
+function updateLimitUI(count, textSize) {
+
+    characterLimitText.classList.add("block");
+    textArea.setAttribute("maxlength", MAX_LENGTH)
+
+    const remaining = Math.max(0, MAX_LENGTH - count)
+    characterLimitText.innerText = String(remaining).padStart(2, '0');
+
+    if(textSize >= MAX_LENGTH) {
+        textArea.classList.add("error");
+        if(textSize > MAX_LENGTH) {
+            errorText.classList.add("flex");
+            errorText.innerHTML = `<img src="./assets/images/icon-info.svg" alt="">Limit reached! Your text exceeds ${MAX_LENGTH} characters.`
+        } else {
+            clearErrorMessage();
+        }
+    } else {
+        textArea.classList.remove("error");
+        
+    }
+}
+
+function resetLimitUI() {
+    characterLimitText.classList.remove("block");
+    textArea.removeAttribute("maxlength");
+
+    clearErrorMessage();
+    textArea.classList.remove("error");
+}
+
+function updateCharacterCount(text, noBlankSpace) {
     const exclude = excludeSpaces.checked;
     const limit = characterLimit.checked;
 
-    /* Check if exclude spaces is selected - Output total Characters*/
-    if(!exclude) {
-        totalChars.innerText = `${String(text.length).padStart(2, '0')}`; // Output the count with blank spaces
-    } else { 
-        totalChars.innerText = `${String(noBlankSpace.length).padStart(2, '0')}`; //Output the count with no blank spaces
-    }
+    const currentCount = getCurrentCharacterCount(text, noBlankSpace, exclude);
+    renderCharacterCount(currentCount);
 
-
-    /* Check if limit checkbox is selected */
     if(limit) {
-        /* When selected, make the span with class character-limit-text visible and set a character limit */
-        characterLimitText.classList.add("block");
-        textArea.setAttribute("maxlength", 300)
-
-        /* Check if exclude spaces is selected */
-        if(!exclude) {
-            characterLimitText.innerText = `${Math.max(0, maxLengh - text.length)}`; // Output the count with blank spaces
-        } else {
-            characterLimitText.innerText = `${Math.max(0, maxLengh - noBlankSpace.length)}`; //Output the count with no blank spaces
-        }
-        
-        if(text.length >= textArea.maxLength) { //Check if text inside text area is equal or bigger than maxlength
-            textArea.classList.add("error"); //Add error class (orange border)
-            if(text.length > textArea.maxLength) { // Check if text insde text are is bigger than maxlength
-                errorText.classList.add("block") // Make error text visible
-            } else {
-                errorText.classList.remove("block") //Make error text invisible
-            }
-        } else {
-            textArea.classList.remove("error"); // Remove the orange border
-        }
+        updateLimitUI(currentCount, text.length)
     } else {
-        characterLimitText.classList.remove("block"); // Remove counter character limit
-        textArea.removeAttribute("maxlength") // Remove maxlength attribute (users can type as long as they deserve)
+        resetLimitUI()
     }
 }
 
@@ -127,81 +143,79 @@ textArea.addEventListener("input", updateUI);
 excludeSpaces.addEventListener("change", updateUI);
 characterLimit.addEventListener("change", updateUI);
 
+function createLetterItem(letter, percentage) {
+    return `
+        <ul class="list-container">
+        <li class="list-item">
+            <span class="letter-label">${letter.toUpperCase()}</span>
+
+            <div class="progress-bar">
+                <div class="track-bar">
+                <div class="fill-bar" style="width: ${percentage}%" ></div>
+                </div>
+            </div>
+
+            <span class="percentage">${percentage}</span>
+        </li>
+        </ul> `
+}
+
+function updateToggleButton(hasExtraContent, isExpanded) {
+    if(hasExtraContent && !isExpanded) {
+        toggleBtn.innerHTML = `
+            See more
+            <span class="arrow"></span>`
+    } else if(hasExtraContent && isExpanded) {
+        toggleBtn.innerHTML = `
+            See less
+            <span class="arrow open"></span>`
+    } else {
+        toggleBtn.innerHTML = "";
+    }
+}
 
 /* Output letters and bars */
 const totalElementsVisible = 5;
 
 function renderLetterDensity(letterObj, noBlankSpace) {
-    let letters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
-
-    /* Checking if the letters array is smaller than the totalElementsVisibel. If it is:
-        Add the letter in the div visible (letterDensity)
-
-        If not
-
-        It will be added in the not visible (unless user press the buttom See more) extraContent 
-    */
     letterDensity.innerHTML = '';
     extraContent.innerHTML = '';
+    toggleBtn.innerHTML = '';
+    extraContent.classList.remove("block");
+
+    if(noBlankSpace.length === 0) {
+        return;
+    }
+
+    const letters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
+
     
     for(let i = 0; i < letters.length; i++) {
-        let perLetters = ((letters[i][1] / noBlankSpace.length) * 100).toFixed(2);
+        const percentage = ((letters[i][1] / noBlankSpace.length) * 100).toFixed(2);
+        const letter = letters[i][0];
+
+        const itemHTML = createLetterItem(letter, percentage)
 
         if(i < totalElementsVisible) {
-            letterDensity.innerHTML += `
-            <ul class="list-container">
-            <li class="list-item">
-                <span class="letter-label">${letters[i][0].toUpperCase()}</span>
-
-                <div class="progress-bar">
-                  <div class="track-bar">
-                    <div class="fill-bar" style="width: ${perLetters}%" ></div>
-                  </div>
-                </div>
-
-                <span class="percentage">${((letters[i][1] / noBlankSpace.length) * 100).toFixed(2)}</span>
-            </li>
-          </ul>
-        `
+            letterDensity.innerHTML += itemHTML;
         } else {
-            extraContent.innerHTML += `
-                <ul class="list-container">
-                <li class="list-item">
-                    <span class="letter-label">${letters[i][0].toUpperCase()}</span>
-
-                    <div class="progress-bar">
-                    <div class="track-bar">
-                        <div class="fill-bar" style="width: ${perLetters}%"></div>
-                    </div>
-                    </div>
-
-                    <span class="percentage">${((letters[i][1] / noBlankSpace.length) * 100).toFixed(2)}</span>
-                </li>
-                </ul>
-            `
-            toggleBtn.innerHTML = `
-            See more
-            <span class="arrow"></span>`
-        }    
+            extraContent.innerHTML += itemHTML;
+        }       
     }
+
+    const hasExtraContent = letters.length > totalElementsVisible;
+    const isExpanded = extraContent.classList.contains("block");
+
+    updateToggleButton(hasExtraContent, isExpanded);
 }
 
-/* Button - Modify Text and Arrow */
-
-toggleBtn.addEventListener('click', (e) => {
+toggleBtn.addEventListener("click", () => {
     extraContent.classList.toggle("block")
-    
-    if(extraContent.classList.contains("block")) {
-        toggleBtn.innerHTML = `
-            See less
-            <span class="arrow open"></span>`
-    } else {
-        toggleBtn.innerHTML = `
-            See more
-            <span class="arrow"></span>` 
-    }
 
-    
+    const isExpanded = extraContent.classList.contains("block");
+    const hasExtraContent = extraContent.innerHTML !== "";
+
+    updateToggleButton(hasExtraContent, isExpanded);
 })
 
 function extractLetters (text, noBlankSpace) {
