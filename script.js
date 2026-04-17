@@ -174,10 +174,26 @@ function updateToggleButton(hasExtraContent, isExpanded) {
     }
 }
 
+// function getSortedLetterData(letterCounts, totalChars) {
+//     return Object.entries(letterCounts)
+//         .sort((a, b) => b[1] - a[1])
+//         .map(([letter, count]) => ({
+//             letter,
+//             count,
+//             percentage: ((count / totalChars) * 100).toFixed(2)
+//         }));
+// }
+
+// function createLetterItemsHTML(items) {
+//     return items.map(item => createLetterItem(item.letter, item.percentage)).join("");
+// }
+
+
+
 /* Output letters and bars */
 const totalElementsVisible = 5;
 
-function renderLetterDensity(letterObj, noBlankSpace) {
+function letterCounts(letterObj, noBlankSpace) {
     letterDensity.innerHTML = '';
     extraContent.innerHTML = '';
     toggleBtn.innerHTML = '';
@@ -187,24 +203,82 @@ function renderLetterDensity(letterObj, noBlankSpace) {
         return;
     }
 
-    const letters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
+    const sortedLetters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
+    let visibleHTML = "";
+    let extraHTML = "";
 
-    
-    for(let i = 0; i < letters.length; i++) {
-        const percentage = ((letters[i][1] / noBlankSpace.length) * 100).toFixed(2);
-        const letter = letters[i][0];
+    /* My style improved */
+    // for(let i = 0; i < sortedLetters.length; i++) {
+    //     const [letter, count] = sortedLetters[i];
+    //     const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
 
-        const itemHTML = createLetterItem(letter, percentage)
+    //     const itemHTML = createLetterItem(letter, percentage)
 
-        if(i < totalElementsVisible) {
-            letterDensity.innerHTML += itemHTML;
-        } else {
-            extraContent.innerHTML += itemHTML;
-        }       
-    }
+    //     if(i < totalElementsVisible) {
+    //         visibleHTML += itemHTML;
+    //     } else {
+    //         extraHTML += itemHTML;
+    //     }      
+    // }
 
-    const hasExtraContent = letters.length > totalElementsVisible;
-    const isExpanded = extraContent.classList.contains("block");
+    /* My style using map + join */
+    const letterItems = sortedLetters.map(([letter, count]) => {
+        const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
+
+        return {
+            letter,
+            count,
+            percentage,
+            html: createLetterItem(letter, percentage)
+        }
+    })
+
+    visibleHTML = letterItems
+        .slice(0, totalElementsVisible)
+        .map(item => item.html)
+        .join("");
+
+    extraHTML = letterItems
+        .slice(totalElementsVisible)
+        .map(item => item.html)
+        .join("")
+
+
+    /* Same approach, different way: Using  getSortedLetterData and createLetterItemsHTML - Separeting functions*/
+    /*
+    const items = getSortedLetterData(letterCounts, noBlankSpace.length);
+
+    const visibleItems = items.slice(0, totalElementsVisible);
+    const extraItems = items.slice(totalElementsVisible);
+
+    letterDensity.innerHTML = createLetterItemsHTML(visibleItems);
+    extraContent.innerHTML = createLetterItemsHTML(extraItems);
+
+    const hasExtraContent = extraItems.length > 0;
+    updateToggleButton(hasExtraContent, false);
+    */
+
+
+    /* Different approach for FOR LOOP */
+    /*
+        for (const [index, entry] of sortedLetters.entries()) {
+            const [letter, count] = entry;
+            const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
+            const itemHTML = createLetterItem(letter, percentage);
+
+            if (index < totalElementsVisible) {
+                visibleHTML += itemHTML;
+            } else {
+                extraHTML += itemHTML;
+            }
+        }
+    */
+
+    letterDensity.innerHTML = visibleHTML;
+    extraContent.innerHTML = extraHTML;
+
+    const hasExtraContent = sortedLetters.length > totalElementsVisible;
+    const isExpanded = false;
 
     updateToggleButton(hasExtraContent, isExpanded);
 }
@@ -231,7 +305,7 @@ function extractLetters (text, noBlankSpace) {
         }
     }
 
-    renderLetterDensity(lettersObj, noBlankSpace)
+    letterCounts(lettersObj, noBlankSpace)
 }
 
-renderLetterDensity();
+letterCounts();
