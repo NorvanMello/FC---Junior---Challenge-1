@@ -314,7 +314,7 @@ h1 {
 
 .fill-bar {
     background: var(--purple-500);
-    width: 30%;
+    /* width: 30%; */
     height: 100%;
     border-radius: 999px;
 }
@@ -401,6 +401,10 @@ h1 {
     margin-bottom: var(--spacing-200);
 }
 
+.error-text img {
+    margin-right: 5px;
+}
+
 /* Hidden & Block Classes */
 .hidden {
     display: none;
@@ -408,4 +412,8 @@ h1 {
 
 .block {
     display: block;
+}
+
+.flex {
+    display: flex;
 }
