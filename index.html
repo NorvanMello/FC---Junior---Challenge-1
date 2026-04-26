@@ -10,7 +10,6 @@
   <title>Character counter</title>
 </head>
 <body>
-
   <main class="main-card">
     <section class="container">
       <header>
@@ -27,7 +26,7 @@
 
       <section class="text-area">
         <label for="text-area-element" class="hidden">Message</label>
-        <textarea name="" id="text-area-element"></textarea>
+        <textarea name="message" id="text-area-element" aria-label="Your message"></textarea>
         <p class="error-text"></p>
 
         <section class="option-sec">
@@ -39,7 +38,7 @@
           <label>
             <input type="checkbox" id="character-limit">
             Set Character Limit 
-            <span class="character-limit-text">30</span>
+            <span class="character-limit-display">30</span>
           </label>   
 
           <p class="reading-time-text">Approx. reading time: 1 minute</p> 
@@ -75,27 +74,6 @@
 
         </dl>
 
-        <!-- <div class="total-chars show-result-divs">
-          <img src="./assets/images/pattern-character-count.svg" alt="" class="bg-img-show-results-divs">
-
-          <span class="number-show-results characters">00</span>
-          <span class="text-show-results">Total Characters</span>
-        </div>
-
-        <div class="word-count show-result-divs">
-          <img src="./assets/images/pattern-word-count.svg" alt="" class="bg-img-show-results-divs">
-
-          <span class="number-show-results words">00</span>
-          <span class="text-show-results">Word Count</span>
-        </div>
-
-        <div class="sentence-count show-result-divs">
-          <img src="./assets/images/pattern-sentence-count.svg" alt="" class="bg-img-show-results-divs">
-
-          <span class="number-show-results sentences">00</span>
-          <span class="text-show-results">Sentence Count</span>
-        </div> -->
-
         <div class="letter-density">
           <h2 class="letter-title">Letter Density</h2>
 
@@ -108,7 +86,7 @@
 
         </div>
 
-        <button class="toggle-btn">
+        <button class="toggle-btn"  aria-label="Toggle menu">
 
         </button>
       </section>
