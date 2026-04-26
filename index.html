@@ -18,7 +18,7 @@
           <img src="./assets/images/logo-dark-theme.svg" alt="" class="logo-img">
         </picture>
 
-        <button class="header-btn">
+        <button class="header-btn" aria-label="Toggle theme">
           <img src="./assets/images/icon-sun.svg" alt="" class="btn-img">
         </button>
       </header>
@@ -26,6 +26,7 @@
       <h1 class="title-main">Analyze your text in real-time.</h1>
 
       <section class="text-area">
+        <label for="text-area-element hidden">Message</label>
         <textarea name="" id="text-area-element"></textarea>
         <p class="error-text"></p>
 
@@ -63,12 +64,12 @@
         <div class="letter-density">
           <h2 class="letter-title">Letter Density</h2>
 
-          <div class="letter-list">
+          <div class="letter-list" aria-live="polite" aria-atomic="true">
               
           </div>
         </div>
 
-        <div class="extra-content">
+        <div class="extra-content" aria-live="polite" aria-atomic="true">
 
         </div>
 
