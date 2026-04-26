@@ -18,7 +18,7 @@
           <img src="./assets/images/logo-dark-theme.svg" alt="" class="logo-img">
         </picture>
 
-        <button class="header-btn" aria-label="Toggle theme">
+        <button type="button" class="header-btn" aria-label="Toggle theme">
           <img src="./assets/images/icon-sun.svg" alt="" class="btn-img">
         </button>
       </header>
@@ -26,21 +26,56 @@
       <h1 class="title-main">Analyze your text in real-time.</h1>
 
       <section class="text-area">
-        <label for="text-area-element hidden">Message</label>
+        <label for="text-area-element" class="hidden">Message</label>
         <textarea name="" id="text-area-element"></textarea>
         <p class="error-text"></p>
 
         <section class="option-sec">
-          <p><input type="checkbox" id="exclude-spaces"> Exclude Spaces</p>
+          <label>
+            <input type="checkbox" id="exclude-spaces"> 
+            Exclude Spaces
+          </label>
 
-          <p><input type="checkbox" id="character-limit"> Set Character Limit <span class="character-limit-text"></span></p>   
+          <label>
+            <input type="checkbox" id="character-limit">
+            Set Character Limit 
+            <span class="character-limit-text">30</span>
+          </label>   
 
           <p class="reading-time-text">Approx. reading time: 1 minute</p> 
         </section>
       </section> 
 
       <section class="show-results">
-        <div class="total-chars show-result-divs">
+
+        <dl>
+          <div class="total-chars show-result-divs">
+            <dt  class="text-show-results">Total Characters</dt>
+            <dd class="stat-value">
+              <img src="./assets/images/pattern-character-count.svg" alt="" class="bg-img-show-results-divs">
+              <span class="number-show-results characters">00</span>
+            </dd>
+          </div>
+          
+          <div class="word-count show-result-divs">
+            <dt class="text-show-results">Word Count</dt>
+            <dd class="stat-value">
+              <img src="./assets/images/pattern-word-count.svg" alt="" class="bg-img-show-results-divs">
+              <span class="number-show-results words">00</span>
+            </dd>
+          </div>
+
+          <div class="sentence-count show-result-divs">
+            <dt class="text-show-results">Sentence Count</dt>
+            <dd class="stat-value">
+              <img src="./assets/images/pattern-sentence-count.svg" alt="" class="bg-img-show-results-divs">
+              <span class="number-show-results sentences">00</span>
+            </dd>
+          </div>
+
+        </dl>
+
+        <!-- <div class="total-chars show-result-divs">
           <img src="./assets/images/pattern-character-count.svg" alt="" class="bg-img-show-results-divs">
 
           <span class="number-show-results characters">00</span>
@@ -59,7 +94,7 @@
 
           <span class="number-show-results sentences">00</span>
           <span class="text-show-results">Sentence Count</span>
-        </div>
+        </div> -->
 
         <div class="letter-density">
           <h2 class="letter-title">Letter Density</h2>
