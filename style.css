@@ -368,20 +368,40 @@ h1 {
     background: var(--bg-primary-color-light);
 }
 
-.header-btn-light {
+body.bg-light .header-btn {
     background: var(--neutral-100);
 }
 
-.bg-text-area-color {
-    background: var(--bg-secondary-color-light) !important;
+body.bg-light .title-main {
+    color: var(--text-primary-color-light);
 }
 
-.text-color {
-    color: var(--text-primary-color-light) !important; /* I needed to add !important here because #text-area-style wasn't changing the color */
+body.bg-light #text-area-element {
+    background: var(--bg-secondary-color-light);
+    color: var(--text-primary-color-light);
 }
 
-.checkBox-light {
-    border: 1px solid var(--neutral-900) !important;
+body.bg-light .option-sec p input{
+    border: 1px solid var(--neutral-900);
+}
+
+body.bg-light .option-sec p {
+    color: var(--text-primary-color-light);
+}
+
+body.bg-light .letter-title {
+    color: var(--text-primary-color-light)
+}
+
+body.bg-light .letter-label,
+body.bg-light .percentage,
+body.bg-light .toggle-btn{
+    color: var(--text-primary-color-light);
+}
+
+body.bg-light .arrow {
+    border-right: 2px solid var(--text-primary-color-light);
+    border-bottom: 2px solid var(--text-primary-color-light);
 }
 
 /* Error Statement */
