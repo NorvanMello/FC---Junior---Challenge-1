@@ -171,18 +171,18 @@ h1 {
     color: var(--text-primary-color-dark);
 }
 
-.option-sec p {
+.option-sec label {
     display: flex;
     align-items: center;
     margin: 0;
 }
 
-.option-sec p:nth-child(2) {
+.option-sec label:nth-child(2) {
     margin: 12px 0;
     height: 30px; /*Adjust the height size to limit text*/
 }
 
-.option-sec p input[type="checkbox"] {
+.option-sec label input[type="checkbox"] {
     appearance: none;
 
     width:16px;
@@ -194,12 +194,12 @@ h1 {
     margin: 0 10px 0 0 ;
 }
 
-.option-sec p input[type="checkbox"]:focus-visible {
+.option-sec label input[type="checkbox"]:focus-visible {
     background: var(--neutral-0);
     border: 1px solid var(--purple-500);
 }
 
-.option-sec p input[type="checkbox"]:checked {
+.option-sec label input[type="checkbox"]:checked {
     background: var(--purple-500);
     border: none;
 
@@ -208,7 +208,7 @@ h1 {
     background-position: center;
 }
 
-.character-limit-text {
+.character-limit-display {
     margin-left: 20px;
     padding: 4px 12px;
 
@@ -381,11 +381,15 @@ body.bg-light #text-area-element {
     color: var(--text-primary-color-light);
 }
 
-body.bg-light .option-sec p input{
+body.bg-light .reading-time-text {
+    color: var(--text-primary-color-light);
+}
+
+body.bg-light .option-sec label input{
     border: 1px solid var(--neutral-900);
 }
 
-body.bg-light .option-sec p {
+body.bg-light .option-sec label {
     color: var(--text-primary-color-light);
 }
 
