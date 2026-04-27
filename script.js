@@ -32,7 +32,7 @@
     const excludeSpaces = document.getElementById("exclude-spaces");
     const textArea = document.querySelector("#text-area-element");
     const characterLimit = document.getElementById("character-limit");
-    const characterLimitText = document.querySelector(".character-limit-text");
+    const characterLimitDisplay = document.querySelector(".character-limit-display");
     const errorText = document.querySelector(".error-text");
 
     const words = document.querySelector(".words");
@@ -69,11 +69,11 @@
 
     function updateLimitUI(count, textSize) {
 
-        characterLimitText.classList.add("block");
+        characterLimitDisplay.classList.add("block");
         textArea.setAttribute("maxlength", MAX_LENGTH)
 
         const remaining = Math.max(0, MAX_LENGTH - count)
-        characterLimitText.innerText = String(remaining).padStart(2, '0');
+        characterLimitDisplay.innerText = String(remaining).padStart(2, '0');
 
         if(textSize >= MAX_LENGTH) {
             textArea.classList.add("error");
@@ -89,7 +89,7 @@
     }
 
     function resetLimitUI() {
-        characterLimitText.classList.remove("block");
+        characterLimitDisplay.classList.remove("block");
         textArea.removeAttribute("maxlength");
 
         clearErrorMessage();
@@ -131,8 +131,7 @@
 
     function createLetterItem(letter, percentage) {
         return `
-            <ul class="list-container">
-            <li class="list-item">
+            <li class="list-item list-container">
                 <span class="letter-label">${letter.toUpperCase()}</span>
 
                 <div class="progress-bar">
@@ -141,9 +140,8 @@
                     </div>
                 </div>
 
-                <span class="percentage">${percentage}</span>
-            </li>
-            </ul> `
+                <span class="percentage">${percentage}%</span>
+            </li> `
     }
 
     function updateToggleButton(hasExtraContent, isExpanded) {
@@ -159,21 +157,6 @@
             toggleBtn.innerHTML = "";
         }
     }
-
-    // function getSortedLetterData(letterCounts, totalChars) {
-    //     return Object.entries(letterCounts)
-    //         .sort((a, b) => b[1] - a[1])
-    //         .map(([letter, count]) => ({
-    //             letter,
-    //             count,
-    //             percentage: ((count / totalChars) * 100).toFixed(2)
-    //         }));
-    // }
-
-    // function createLetterItemsHTML(items) {
-    //     return items.map(item => createLetterItem(item.letter, item.percentage)).join("");
-    // }
-
 
 
     /* Output letters and bars */
@@ -194,20 +177,6 @@
         const sortedLetters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
         let visibleHTML = "";
         let extraHTML = "";
-
-        /* My style improved */
-        // for(let i = 0; i < sortedLetters.length; i++) {
-        //     const [letter, count] = sortedLetters[i];
-        //     const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
-
-        //     const itemHTML = createLetterItem(letter, percentage)
-
-        //     if(i < totalElementsVisible) {
-        //         visibleHTML += itemHTML;
-        //     } else {
-        //         extraHTML += itemHTML;
-        //     }      
-        // }
 
         /* My style using map + join */
         const letterItems = sortedLetters.map(([letter, count]) => {
@@ -230,37 +199,6 @@
             .slice(totalElementsVisible)
             .map(item => item.html)
             .join("")
-
-
-        /* Same approach, different way: Using  getSortedLetterData and createLetterItemsHTML - Separeting functions*/
-        /*
-        const items = getSortedLetterData(letterCounts, noBlankSpace.length);
-
-        const visibleItems = items.slice(0, totalElementsVisible);
-        const extraItems = items.slice(totalElementsVisible);
-
-        letterDensity.innerHTML = createLetterItemsHTML(visibleItems);
-        extraContent.innerHTML = createLetterItemsHTML(extraItems);
-
-        const hasExtraContent = extraItems.length > 0;
-        updateToggleButton(hasExtraContent, false);
-        */
-
-
-        /* Different approach for FOR LOOP */
-        /*
-            for (const [index, entry] of sortedLetters.entries()) {
-                const [letter, count] = entry;
-                const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
-                const itemHTML = createLetterItem(letter, percentage);
-
-                if (index < totalElementsVisible) {
-                    visibleHTML += itemHTML;
-                } else {
-                    extraHTML += itemHTML;
-                }
-            }
-        */
 
         letterDensity.innerHTML = visibleHTML;
         extraContent.innerHTML = extraHTML;
