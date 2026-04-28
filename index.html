@@ -26,7 +26,7 @@
 
       <section class="text-area">
         <label for="text-area-element" class="hidden">Message</label>
-        <textarea name="message" id="text-area-element" aria-label="Your message"></textarea>
+        <textarea name="message" id="text-area-element"></textarea>
         <p class="error-text"></p>
 
         <section class="option-sec">
@@ -38,7 +38,7 @@
           <label>
             <input type="checkbox" id="character-limit">
             Set Character Limit 
-            <span class="character-limit-display">30</span>
+            <span class="character-limit-display"></span>
           </label>   
 
           <p class="reading-time-text">Approx. reading time: 1 minute</p> 
@@ -74,13 +74,17 @@
         <div class="letter-density">
           <h2 class="letter-title">Letter Density</h2>
 
-          <div class="letter-list" aria-live="polite" aria-atomic="true">
-              
+          <div class="letter-list" >
+              <ul class="" aria-live="polite" aria-atomic="true">
+
+              </ul>
           </div>
         </div>
 
-        <div class="extra-content" aria-live="polite" aria-atomic="true">
+        <div class="extra-content">
+          <ul class="" aria-live="polite" aria-atomic="true">
 
+          </ul>
         </div>
 
         <button class="toggle-btn"  aria-label="Toggle menu">
