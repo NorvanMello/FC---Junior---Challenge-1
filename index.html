@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="style.css">
   
   <title>Character counter</title>
 </head>
+
 <body>
   <main class="main-card">
-    <section class="container">
+    <div class="container">
       <header>
         <picture>
           <img src="./assets/images/logo-dark-theme.svg" alt="" class="logo-img">
@@ -24,26 +25,29 @@
 
       <h1 class="title-main">Analyze your text in real-time.</h1>
 
-      <section class="text-area">
-        <label for="text-area-element" class="hidden">Message</label>
-        <textarea name="message" id="text-area-element"></textarea>
-        <p class="error-text"></p>
+      <form class="text-form">
+        <fieldset class="text-area">
+          <legend class="hidden">Message settings</legend>
+          <label for="text-area-element" class="hidden">Message</label>
+          <textarea name="message" id="text-area-element"></textarea>
+          <p class="error-text"></p>
 
-        <section class="option-sec">
-          <label>
-            <input type="checkbox" id="exclude-spaces"> 
-            Exclude Spaces
-          </label>
+          <div class="option-sec">
+            <label>
+              <input type="checkbox" id="exclude-spaces"> 
+              Exclude Spaces
+            </label>
 
-          <label>
-            <input type="checkbox" id="character-limit">
-            Set Character Limit 
-            <span class="character-limit-display"></span>
-          </label>   
+            <label>
+              <input type="checkbox" id="character-limit">
+              Set Character Limit 
+              <span class="character-limit-display"></span>
+            </label>   
 
-          <p class="reading-time-text">Approx. reading time: 1 minute</p> 
-        </section>
-      </section> 
+            <p class="reading-time-text">Approx. reading time: 1 minute</p> 
+          </div>
+        </fieldset> 
+      </form>
 
       <section class="stats" aria-labelledby="stats-title">
         <h2 id="stats-title" class="sr-only">Writing statistics</h2>
@@ -69,30 +73,28 @@
         </ul>
       </section>
 
-      
-        <div class="letter-density">
-          <h2 class="letter-title">Letter Density</h2>
+      <div class="letter-density">
+        <h2 class="letter-title">Letter Density</h2>
 
-          <div class="letter-list" >
-              <ul class="" aria-live="polite" aria-atomic="true">
+        <div class="letter-list" >
+            <ul class="" aria-live="polite" aria-atomic="true">
 
-              </ul>
-          </div>
+            </ul>
         </div>
+      </div>
 
-        <div class="extra-content">
-          <ul class="" aria-live="polite" aria-atomic="true">
+      <div class="extra-content">
+        <ul class="" aria-live="polite" aria-atomic="true">
 
-          </ul>
-        </div>
+        </ul>
+      </div>
 
-        <button type="button" class="toggle-btn"  aria-label="Toggle menu">
-          <span class="hidden">Toggle menu</span>
-        </button>
-      </section>
-    </section>
+      <button type="button" class="toggle-btn"  aria-label="Toggle menu">
+        <span class="hidden">Toggle menu</span>
+      </button>
+    
+    </div>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
