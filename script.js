@@ -165,8 +165,6 @@
         toggleBtn.innerHTML = '';
         extraContent.classList.remove("block");
 
-
-
         if(noBlankSpace.length === 0) {
             return;
         }
