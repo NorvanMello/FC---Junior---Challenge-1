@@ -3,19 +3,16 @@
     const headerBtnImg = document.querySelector(".btn-img")
     const logo = document.querySelector(".logo-img");
 
-    const checkBox = document.querySelectorAll('.option-sec p input[type="checkbox"]');
-
     const letterDensity = document.querySelector(".letter-list");
     const extraContent = document.querySelector(".extra-content");
 
     const toggleBtn = document.querySelector(".toggle-btn")
 
-
-    /* Button - Dark/Light Mode */
-    headerBtn.addEventListener("click", () => {
+    if(headerBtn) {
+         /* Button - Dark/Light Mode */
+        headerBtn.addEventListener("click", () => {
 
         body.classList.toggle("bg-light")
-        // headerBtn.classList.toggle("header-btn-light")
 
         /* Switch the logo */
         if (body.classList.contains("bg-light")) {
@@ -26,6 +23,7 @@
             headerBtnImg.src = "./assets/images/icon-sun.svg";
         }
     })
+    }
 
     /* Functions to work with user's input */
     const totalChars = document.querySelector(".characters");
@@ -112,7 +110,7 @@
 
     /* Counting Words */
     function wordCount(text) {
-        const wordsToCount = text.trim().split(" ").filter(w => w !== ""); // Removing spacing at start and end. Split the string into elements in an array, using space as separator. Filtering to keep non empty words.
+        const wordsToCount = text.trim().split(/\s+/).filter(w => w !== ""); // Removing spacing at start and end. Split the string into elements in an array, using space as separator. Filtering to keep non empty words.
         const total = String(wordsToCount.length).padStart(2, '0');
         words.innerText = total;
     }
@@ -158,22 +156,6 @@
         }
     }
 
-    // function getSortedLetterData(letterCounts, totalChars) {
-    //     return Object.entries(letterCounts)
-    //         .sort((a, b) => b[1] - a[1])
-    //         .map(([letter, count]) => ({
-    //             letter,
-    //             count,
-    //             percentage: ((count / totalChars) * 100).toFixed(2)
-    //         }));
-    // }
-
-    // function createLetterItemsHTML(items) {
-    //     return items.map(item => createLetterItem(item.letter, item.percentage)).join("");
-    // }
-
-
-
     /* Output letters and bars */
     const totalElementsVisible = 5;
 
@@ -183,7 +165,7 @@
         toggleBtn.innerHTML = '';
         extraContent.classList.remove("block");
 
-        console.log(noBlankSpace.length)
+
 
         if(noBlankSpace.length === 0) {
             return;
@@ -192,20 +174,6 @@
         const sortedLetters = Object.entries(letterObj).sort((a, b) => b[1] - a[1]);
         let visibleHTML = "";
         let extraHTML = "";
-
-        /* My style improved */
-        // for(let i = 0; i < sortedLetters.length; i++) {
-        //     const [letter, count] = sortedLetters[i];
-        //     const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
-
-        //     const itemHTML = createLetterItem(letter, percentage)
-
-        //     if(i < totalElementsVisible) {
-        //         visibleHTML += itemHTML;
-        //     } else {
-        //         extraHTML += itemHTML;
-        //     }      
-        // }
 
         /* My style using map + join */
         const letterItems = sortedLetters.map(([letter, count]) => {
@@ -229,36 +197,6 @@
             .map(item => item.html)
             .join("")
 
-
-        /* Same approach, different way: Using  getSortedLetterData and createLetterItemsHTML - Separeting functions*/
-        /*
-        const items = getSortedLetterData(letterCounts, noBlankSpace.length);
-
-        const visibleItems = items.slice(0, totalElementsVisible);
-        const extraItems = items.slice(totalElementsVisible);
-
-        letterDensity.innerHTML = createLetterItemsHTML(visibleItems);
-        extraContent.innerHTML = createLetterItemsHTML(extraItems);
-
-        const hasExtraContent = extraItems.length > 0;
-        updateToggleButton(hasExtraContent, false);
-        */
-
-
-        /* Different approach for FOR LOOP */
-        /*
-            for (const [index, entry] of sortedLetters.entries()) {
-                const [letter, count] = entry;
-                const percentage = ((count / noBlankSpace.length) * 100).toFixed(2);
-                const itemHTML = createLetterItem(letter, percentage);
-
-                if (index < totalElementsVisible) {
-                    visibleHTML += itemHTML;
-                } else {
-                    extraHTML += itemHTML;
-                }
-            }
-        */
 
         letterDensity.innerHTML = visibleHTML;
         extraContent.innerHTML = extraHTML;
@@ -291,9 +229,5 @@
             }
         }
 
-        console.log(lettersObj)
-
         letterCounts(lettersObj, noBlankSpace)
     }
-
-    letterCounts();
