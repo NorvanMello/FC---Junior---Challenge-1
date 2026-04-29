@@ -28,7 +28,7 @@
       <form class="text-form">
         <fieldset class="text-area">
           <legend class="hidden">Message settings</legend>
-          <label for="text-area-element" class="hidden">Message</label>
+          <label for="text-area-element" class="visually-hidden">Message</label>
           <textarea name="message" id="text-area-element"></textarea>
           <p class="error-text"></p>
 
@@ -50,7 +50,7 @@
       </form>
 
       <section class="stats" aria-labelledby="stats-title">
-        <h2 id="stats-title" class="sr-only">Writing statistics</h2>
+        <h2 id="stats-title" class="visually-hidden">Writing statistics</h2>
 
         <ul class="stats-list">
           <li class="stat-card total-chars">
@@ -83,13 +83,13 @@
         </div>
       </div>
 
-      <div class="extra-content">
+      <div class="extra-content" aria-hidden="true">
         <ul class="" aria-live="polite" aria-atomic="true">
 
         </ul>
       </div>
 
-      <button type="button" class="toggle-btn"  aria-label="Toggle menu">
+      <button type="button" class="toggle-btn" aria-label="Toggle menu" aria-expanded="false">
         <span class="hidden">Toggle menu</span>
       </button>
     
