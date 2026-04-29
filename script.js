@@ -3,6 +3,8 @@
     const headerBtnImg = document.querySelector(".btn-img")
     const logo = document.querySelector(".logo-img");
 
+    // const checkBox = document.querySelectorAll('.option-sec p input[type="checkbox"]');
+
     const letterDensity = document.querySelector(".letter-list");
     const extraContent = document.querySelector(".extra-content");
 
@@ -13,6 +15,7 @@
         headerBtn.addEventListener("click", () => {
 
         body.classList.toggle("bg-light")
+        // headerBtn.classList.toggle("header-btn-light")
 
         /* Switch the logo */
         if (body.classList.contains("bg-light")) {
@@ -147,12 +150,17 @@
             toggleBtn.innerHTML = `
                 See more
                 <span class="arrow"></span>`
+
+            extraContent.setAttribute("aria-hidden", "true");
         } else if(hasExtraContent && isExpanded) {
             toggleBtn.innerHTML = `
                 See less
                 <span class="arrow open"></span>`
+
+            extraContent.setAttribute("aria-hidden", "false");
         } else {
             toggleBtn.innerHTML = "";
+            extraContent.setAttribute("aria-hidden", "true");
         }
     }
 
@@ -164,6 +172,8 @@
         extraContent.innerHTML = '';
         toggleBtn.innerHTML = '';
         extraContent.classList.remove("block");
+
+
 
         if(noBlankSpace.length === 0) {
             return;
@@ -194,7 +204,6 @@
             .slice(totalElementsVisible)
             .map(item => item.html)
             .join("")
-
 
         letterDensity.innerHTML = visibleHTML;
         extraContent.innerHTML = extraHTML;
@@ -229,3 +238,5 @@
 
         letterCounts(lettersObj, noBlankSpace)
     }
+
+    // letterCounts();
