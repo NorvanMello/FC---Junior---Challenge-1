@@ -126,9 +126,13 @@
     }
 
     /* Event Listener */
-    textArea.addEventListener("input", updateUI);
-    excludeSpaces.addEventListener("change", updateUI);
-    characterLimit.addEventListener("change", updateUI);
+    if (!textArea || !excludeSpaces || !characterLimit) {
+        console.warn("Required elements not found. Script stopped.");
+    } else {
+        textArea.addEventListener("input", updateUI);
+        excludeSpaces.addEventListener("change", updateUI);
+        characterLimit.addEventListener("change", updateUI);
+    }
 
     function createLetterItem(letter, percentage) {
         return `
