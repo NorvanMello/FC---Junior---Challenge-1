@@ -5,7 +5,7 @@
 
     // const checkBox = document.querySelectorAll('.option-sec p input[type="checkbox"]');
 
-    const letterDensity = document.querySelector(".letter-list");
+    const letterDensity = document.querySelector(".letter-list ul");
     const extraContent = document.querySelector(".extra-content");
 
     const toggleBtn = document.querySelector(".toggle-btn")
@@ -172,8 +172,6 @@
         extraContent.innerHTML = '';
         toggleBtn.innerHTML = '';
         extraContent.classList.remove("block");
-
-
 
         if(noBlankSpace.length === 0) {
             return;
