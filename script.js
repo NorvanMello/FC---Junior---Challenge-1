@@ -145,22 +145,31 @@
             </li> `
     }
 
+    function setExpandedState(isExpanded) {
+        extraContent.classList.toggle("block", isExpanded);
+        extraContent.setAttribute("aria-hidden", String(!isExpanded));
+        toggleBtn.setAttribute("aria-expanded", String(isExpanded));
+    }
+
     function updateToggleButton(hasExtraContent, isExpanded) {
+
+         toggleBtn.setAttribute("aria-expanded", String(isExpanded));
+
         if(hasExtraContent && !isExpanded) {
             toggleBtn.innerHTML = `
                 See more
                 <span class="arrow"></span>`
 
-            extraContent.setAttribute("aria-hidden", "true");
+            setExpandedState(false);
         } else if(hasExtraContent && isExpanded) {
             toggleBtn.innerHTML = `
                 See less
                 <span class="arrow open"></span>`
 
-            extraContent.setAttribute("aria-hidden", "false");
+           setExpandedState(true);
         } else {
             toggleBtn.innerHTML = "";
-            extraContent.setAttribute("aria-hidden", "true");
+           setExpandedState(false);
         }
     }
 
@@ -172,6 +181,8 @@
         extraContent.innerHTML = '';
         toggleBtn.innerHTML = '';
         extraContent.classList.remove("block");
+
+
 
         if(noBlankSpace.length === 0) {
             return;
@@ -213,12 +224,12 @@
     }
 
     toggleBtn.addEventListener("click", () => {
-        extraContent.classList.toggle("block")
+        const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+        const nextState = !isExpanded;
 
-        const isExpanded = extraContent.classList.contains("block");
-        const hasExtraContent = extraContent.innerHTML !== "";
+        const hasExtraContent = extraContent.innerHTML.trim() !== "";
 
-        updateToggleButton(hasExtraContent, isExpanded);
+        updateToggleButton(hasExtraContent, nextState);
     })
 
     function extractLetters (text, noBlankSpace) {
