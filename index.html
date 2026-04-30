@@ -27,10 +27,10 @@
 
       <form class="text-form">
         <fieldset class="text-area">
-          <legend class="hidden">Message settings</legend>
+          <legend class="visually-hidden">Message settings</legend>
           <label for="text-area-element" class="visually-hidden">Message</label>
-          <textarea name="message" id="text-area-element"></textarea>
-          <p class="error-text"></p>
+          <textarea name="message" id="text-area-element" aria-describedby="error-text"></textarea>
+          <p id="error-text" class="error-text"></p>
 
           <div class="option-sec">
             <label>
